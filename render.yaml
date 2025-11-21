@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: detectify
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: FLASK_ENV
+        value: production
