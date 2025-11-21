@@ -6,3 +6,5 @@ mediapipe==0.10.8
 numpy
 joblib
 gunicorn
+scikit-learn
+
