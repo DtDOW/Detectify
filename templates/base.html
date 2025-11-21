@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title if title else "Detectify" }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin:0;
+      font-family:"Inter", system-ui;
+      background:linear-gradient(180deg, #0f274c, #1b3a74);
+      color:white;
+      min-height:100vh;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:24px 40px;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(6px);
+    }
+
+    .brand {display:flex;gap:14px;align-items:center;}
+    .logo {
+      width:40px;height:40px;border-radius:8px;
+      background:linear-gradient(135deg,#5eead4,#7c3aed);
+      font-weight:800;color:#04202a;
+      display:flex;justify-content:center;align-items:center;
+    }
+    .brand-title {font-size:20px;margin:0;font-weight:800;}
+    .brand-sub {margin:0;font-size:12px;opacity:0.75;}
+
+    a { color:#5eead4; text-decoration:none; }
+    .nav-links a {margin-left:12px;font-size:14px;}
+
+    /* flash messages */
+    .flash-box{
+      max-width:900px;
+      margin:20px auto 0 auto;
+      padding:12px 18px;
+      background:rgba(255,255,255,0.09);
+      border-left:4px solid #5eead4;
+      border-radius:8px;
+      font-size:14px;
+    }
+
+    /* content area wrapper */
+    .content-wrapper {
+      max-width:1100px;
+      margin:30px auto;
+      padding:0 16px;
+    }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="logo">π</div>
+      <div>
+        <div class="brand-title">Detectify</div>
+        <div class="brand-sub">AI-powered deepfake analysis</div>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      {% if current_user.is_authenticated %}
+        Signed in as <strong>{{ current_user.email }}</strong>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Signup</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- FLASH MESSAGES -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, msg in messages %}
+        <div class="flash-box">
+          <strong>{{ category.title() }}:</strong> {{ msg }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- MAIN CONTENT -->
+  <div class="content-wrapper">
+    {% block content %}{% endblock %}
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>
