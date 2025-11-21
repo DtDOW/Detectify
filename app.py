@@ -53,7 +53,12 @@ def allowed_file(filename):
     return ext in ALLOWED_EXTENSIONS
 
 with app.app_context():
-    db.create_all()
+    try:
+        User.__table__.create(db.engine, checkfirst=True)
+        Prediction.__table__.create(db.engine, checkfirst=True)
+    except Exception:
+        pass
+
 
 # --- Pages & API ---
 @app.route("/")
