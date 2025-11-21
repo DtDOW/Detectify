@@ -36,5 +36,7 @@ COPY . /app
 EXPOSE 5000
 
 # run with gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app", "--workers", "2", "--timeout", "120"]
+#CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app", "--workers", "2", "--timeout", "120"]
+CMD ["python", "app.py"]
+
 
